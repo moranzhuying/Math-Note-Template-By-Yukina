@@ -1,0 +1,466 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{./structure}[2026/08/24 Personal document structure]
+
+% ==========================================
+% 1. 页面布局与基本设置
+% ==========================================
+\usepackage{geometry}
+\geometry{a4paper, left=1.5cm, right=1.5cm, top=2cm, bottom=2cm}
+\linespread{1}
+\usepackage{lmodern}
+\usepackage{color}
+\usepackage{bm}
+
+% ==========================================
+% 2. 数学核心宏包
+% ==========================================
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+\usepackage{mathrsfs, stmaryrd, mathtools}
+
+% --- 交换图与正合列 (核心) ---
+\usepackage{tikz-cd}
+\usepackage{graphicx}
+
+% ==========================================
+% 3. 列表环境自定义 (enumerate/itemize)
+% ==========================================
+\usepackage{enumerate}
+\usepackage{enumitem}
+\setlist[enumerate,1]{label=(\arabic*)}
+\setlist[itemize,1]{label=$\diamond$} 
+\setlist[itemize,2]{label=$\triangleright$}
+\setlist[itemize,3]{label=$\ast$}         
+
+
+
+% ==========================================
+% 4. 绘图与交换图表
+% ==========================================
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% ==========================================
+% 5. 章节标题与页眉页脚格式
+% ==========================================
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+
+% 5.1 Section 格式设置
+\titleformat{\section}
+{\normalfont\Large\bfseries\raggedright}
+{\thesection}
+{1em}
+{}
+\titlespacing{\section}{0pt}{*3.5}{*1.5}
+
+% 5.2 页眉页脚设置
+\pagestyle{fancy}
+\fancyhf{} % 清除所有默认设置
+\fancyfoot[C]{\thepage} % 页码置于底部中间
+\renewcommand{\headrulewidth}{0pt} % 去掉页眉横线
+
+% ==========================================
+% 6. 定理与证明环境自定义
+% ==========================================
+
+% 6.1 定义新的定理风格 (note)
+\newtheoremstyle{note}
+{3pt}          % 上方间距
+{3pt}          % 下方间距
+{\normalfont}  % 正文字体
+{}             % 缩进
+{\bfseries}    % 标题字体
+{.}            % 标题后标点
+{ }            % 标题与正文间距
+{}             % 标题格式
+
+% 6.2 证明 (proof) 环境重定义
+% 注意：此处假设你已经定义了 myproof 环境，如果没有，请确保定义它
+\RenewDocumentEnvironment{proof}{o}{%
+	\IfNoValueTF{#1}
+	{\begin{myproof}}
+		{\begin{myproof}[#1]}%
+		}{%
+		\end{myproof}%
+	}
+
+	
+
+% =================================================================
+% 定理与标准环境设置 (视觉统一版)
+% =================================================================
+\usepackage[most]{tcolorbox}
+
+% --- 0. 清理可能冲突的环境 ---
+\let\comment\relax
+\let\endcomment\relax
+\let\problem\relax
+\let\answer\relax
+\let\hint\relax
+\let\endhint\relax
+\let\sketch\relax
+\let\proof\relax
+\let\endproof\relax
+\let\algorithm\relax
+\let\endalgorithm\relax
+\let\code\relax
+\let\endcode\relax
+\let\convention\relax
+\let\endconvention\relax
+\let\alarm\relax
+\let\endalarm\relax
+
+% --- 1. 颜色体系定义 (高区分度学术配色) ---
+% 颜色均适合作为白色背景上的标题和顶边线；盒子背景使用对应颜色的浅色混合。
+\definecolor{mainblue}{RGB}{25, 95, 170}       % 蓝：定义
+\definecolor{mainindigo}{RGB}{65, 75, 160}     % 靛蓝：公理/元定理
+\definecolor{mainteal}{RGB}{0, 125, 140}       % 青：假设/问题
+\definecolor{mainred}{RGB}{180, 45, 55}        % 红：定理/警告
+\definecolor{mainorange}{RGB}{210, 100, 25}    % 橙：引理/算法
+\definecolor{mainpurple}{RGB}{115, 70, 155}    % 紫：命题/分析
+\definecolor{maingreen}{RGB}{40, 125, 75}      % 绿：推论/例
+\definecolor{mainbrown}{RGB}{145, 90, 45}      % 茶：准则/约定
+\definecolor{mainyellow}{RGB}{195, 135, 0}     % 黄：提示/注意
+\definecolor{maingray}{RGB}{80, 80, 80}        % 灰：证明/回答/注记/代码
+\definecolor{lightgray}{RGB}{245, 245, 245}    % 浅灰背景
+
+% 统一计数器
+\newcounter{mathcount}[chapter]
+\renewcommand{\themathcount}{\thechapter.\arabic{mathcount}}
+
+% --- 2. 通用基础样式 ---
+\tcbset{
+	base_thmstyle/.style={
+		enhanced, breakable, sharp corners, boxrule=0pt, frame hidden,
+		attach title to upper={\par\nopagebreak\smallskip},
+		fonttitle=\bfseries\sffamily,
+		description font=\bfseries\sffamily,
+		separator sign={.},
+		label separator={},
+		description delimiters={}{},
+		left=2pt, right=2pt, top=8pt, bottom=5pt,
+		before skip=1.5em, after skip=1.5em,
+	},
+	accent north/.style={borderline north={1.8pt}{0pt}{#1}},
+	accent west/.style={borderline west={1.8pt}{0pt}{#1}}
+}
+
+% --- 3. 核心理论环境 (使用 tcbtheorem，带编号) ---
+
+% 基础陈述：蓝、靛蓝、青
+\newtcbtheorem[use counter=mathcount, number within=chapter]{definition}{定义}{
+base_thmstyle, label type=definition, colback=mainblue!6!white, accent north=mainblue, coltitle=mainblue }{}
+\newtcbtheorem[use counter from=definition]{axiom}{公理}{
+base_thmstyle, label type=axiom, colback=mainindigo!7!white, accent north=mainindigo, coltitle=mainindigo }{}
+\newtcbtheorem[use counter from=definition]{hypothesis}{假设}{
+base_thmstyle, label type=hypothesis, colback=mainteal!7!white, accent north=mainteal, coltitle=mainteal }{}
+
+% 推演结果：每类使用独立主色，便于快速辨认
+\newtcbtheorem[use counter from=definition]{theorem}{定理}{
+base_thmstyle, label type=theorem, colback=mainred!6!white, accent north=mainred, coltitle=mainred }{}
+\newtcbtheorem[use counter from=definition]{lemma}{引理}{
+base_thmstyle, label type=lemma, colback=mainorange!8!white, accent north=mainorange, coltitle=mainorange }{}
+\newtcbtheorem[use counter from=definition]{proposition}{命题}{
+base_thmstyle, label type=proposition, colback=mainpurple!7!white, accent north=mainpurple, coltitle=mainpurple }{}
+\newtcbtheorem[use counter from=definition]{corollary}{推论}{
+base_thmstyle, label type=corollary, colback=maingreen!7!white, accent north=maingreen, coltitle=maingreen }{}
+\newtcbtheorem[use counter from=definition]{metatheorem}{元定理}{
+	base_thmstyle, label type=metatheorem, colback=mainindigo!7!white, accent north=mainindigo, coltitle=mainindigo }{}
+\newtcbtheorem[use counter from=definition]{criteria}{准则}{
+base_thmstyle, label type=criteria, colback=mainbrown!8!white, accent north=mainbrown, coltitle=mainbrown }{}
+
+% 补充说明：问题、例、注记
+\newtcbtheorem[use counter from=definition]{problem}{问题}{
+base_thmstyle, label type=problem, colback=mainyellow!8!white, accent north=mainyellow, coltitle=mainbrown }{}
+\newtcbtheorem[use counter from=definition]{example}{例}{
+base_thmstyle, label type=example, colback=maingreen!6!white, accent north=maingreen, coltitle=maingreen }{}
+\newtcbtheorem[use counter from=definition]{remark}{注记}{
+base_thmstyle, label type=remark, colback=maingray!6!white, accent north=maingray, coltitle=maingray }{}
+
+% 新增环境：算法、约定、警示（均与定理环境共用编号）
+\newtcbtheorem[use counter from=definition]{algorithm}{算法}{
+base_thmstyle, label type=algorithm, colback=mainorange!8!white, accent north=mainorange, coltitle=mainorange }{}
+\newtcbtheorem[use counter from=definition]{convention}{约定}{
+base_thmstyle, label type=convention, colback=mainbrown!8!white, accent north=mainbrown, coltitle=mainbrown }{}
+\newtcbtheorem[use counter from=definition]{alarm}{警示}{
+base_thmstyle, label type=alarm, colback=mainyellow!16!white, accent north=mainred, coltitle=mainred }{}
+
+% --- 4. 证明与回答环境 (通常不带章节编号，但样式统一) ---
+
+% 灰色顶线:证明,回答,分析
+\newtcolorbox{proof}{
+	base_thmstyle,
+	title={证明},
+	coltitle=maingray,
+	accent north=maingray!50,
+	colback=white,
+	after upper={\hfill $\square$} % 自动加证明完毕符号
+}
+
+\newtcolorbox{answer}{
+	base_thmstyle,
+	title={回答},
+	coltitle=maingray,
+	accent north=maingray!30,
+	colback=white!2!white
+}
+
+\newtcbtheorem[use counter from=definition]{sketch}{分析}{
+base_thmstyle, label type=sketch, colback=mainpurple!5!white, accent north=mainpurple!70, coltitle=mainpurple }{}
+
+% --- 5. 提示环境：环境正文可自然换行、分段和跨页 ---
+\newtcolorbox{hint}[1][提示]{
+	base_thmstyle,
+	title={#1},
+	coltitle=mainbrown,
+	colback=mainyellow!10!white,
+	accent west=mainyellow,
+	left=8pt,
+	top=5pt
+}
+
+% --- 6. 代码环境：可换行、可跨页；可选参数作为标题 ---
+% 用法：\begin{code}[Python 示例] ... \end{code}
+\newtcblisting{code}[1][]{
+	enhanced, breakable, listing only,
+	sharp corners, boxrule=0pt, frame hidden,
+	colback=maingray!6!white,
+	accent west=maingray,
+	title={\ifstrempty{#1}{代码}{代码：#1}},
+	fonttitle=\bfseries\sffamily,
+	coltitle=maingray,
+	left=8pt, right=5pt, top=5pt, bottom=5pt,
+	before skip=1.5em, after skip=1.5em,
+	listing options={
+		basicstyle=\ttfamily\small,
+		breaklines=true,
+		columns=fullflexible,
+		keepspaces=true,
+		showstringspaces=false
+	}
+}
+
+
+
+% =================================================================
+% 引用与超链接设置
+% =================================================================
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,         % 开启链接颜色
+	linkcolor=mainblue,      % 内部链接颜色(如目录,公式引用),使用我们定义的蓝色
+	citecolor=mainblue,      % 文献引用颜色
+	filecolor=magenta,      
+	urlcolor=mainblue,       % 外部网址颜色
+}
+\renewcommand{\figureautorefname}{图}
+\renewcommand{\tableautorefname}{表}
+
+% tcolorbox 定理环境的 \autoref 名称。它们与盒子边线的颜色、宽度无关，
+% 显式定义可避免调整视觉样式后自动引用名称丢失。
+% 所有这类环境共用 mathcount 计数器，hyperref 实际查询的是该计数器名。
+\providecommand{\mathcountautorefname}{定理}
+\providecommand{\definitionautorefname}{定义}
+\providecommand{\axiomautorefname}{公理}
+\providecommand{\hypothesisautorefname}{假设}
+\providecommand{\theoremautorefname}{定理}
+\providecommand{\lemmaautorefname}{引理}
+\providecommand{\propositionautorefname}{命题}
+\providecommand{\corollaryautorefname}{推论}
+\providecommand{\metatheoremautorefname}{元定理}
+\providecommand{\criteriaautorefname}{准则}
+\providecommand{\problemautorefname}{问题}
+\providecommand{\exampleautorefname}{例}
+\providecommand{\remarkautorefname}{注记}
+\providecommand{\sketchautorefname}{分析}
+\providecommand{\algorithmautorefname}{算法}
+\providecommand{\conventionautorefname}{约定}
+\providecommand{\alarmautorefname}{警示}
+
+
+
+% 如果你想让引用更智能,比如自动显示``Theorem 1.1''而不是只显示``1.1'',可以加上这个：
+\usepackage[nameinlink]{cleveref}
+
+
+% 针对英文环境的引用名设置
+\crefname{definition}{Definition}{Definitions}
+\crefname{theorem}{Theorem}{Theorems}
+\crefname{lemma}{Lemma}{Lemmas}
+\crefname{problem}{Problem}{Problems}
+\crefname{algorithm}{Algorithm}{Algorithms}
+\crefname{convention}{Convention}{Conventions}
+\crefname{alarm}{Alarm}{Alarms}
+
+% tcolorbox 环境共用 mathcount 计数器；其类型信息由 cleveref 写入
+% @cref 标签。令 autoref 复用 cleveref，确保每种环境显示自己的名称。
+\crefname{definition}{定义}{定义}
+\crefname{axiom}{公理}{公理}
+\crefname{hypothesis}{假设}{假设}
+\crefname{theorem}{定理}{定理}
+\crefname{lemma}{引理}{引理}
+\crefname{proposition}{命题}{命题}
+\crefname{corollary}{推论}{推论}
+\crefname{metatheorem}{元定理}{元定理}
+\crefname{criteria}{准则}{准则}
+\crefname{problem}{问题}{问题}
+\crefname{example}{例}{例}
+\crefname{remark}{注记}{注记}
+\crefname{sketch}{分析}{分析}
+\crefname{algorithm}{算法}{算法}
+\crefname{convention}{约定}{约定}
+\crefname{alarm}{警示}{警示}
+\renewcommand{\autoref}[1]{\cref{#1}}
+
+
+
+
+
+	
+% =================================================================
+% 数学符号定义库
+% =================================================================
+
+% -----------------------------------------------------------------
+% 代数
+% -----------------------------------------------------------------
+\newcommand{\N}{\mathbb{N}}              % 自然数集
+\newcommand{\Z}{\mathbb{Z}}              % 整数集
+\newcommand{\Q}{\mathbb{Q}}              % 有理数集
+\newcommand{\R}{\mathbb{R}}              % 实数集
+\newcommand{\C}{\mathbb{C}}              % 复数集
+\newcommand{\K}{\mathbb{K}}              % 域 
+\newcommand{\F}{\mathbb{F}}              % 有限域
+\renewcommand{\emptyset}{\varnothing}    % 更美观的空集
+\newcommand{\fin}{\operatorname{Fin}}    % 有限
+\newcommand{\Coll}{\operatorname{Coll}}  % 集合族/集合汇集
+\newcommand{\FuncRel}{\operatorname{FuncRel}} % 函数关系
+\newcommand{\PFunc}{\operatorname{PFunc}} % 偏函数
+\newcommand{\Eq}{\operatorname{Eq}}      % 等价关系
+\newcommand{\id}{\operatorname{id}}      % 恒等变换
+\newcommand{\rank}{\operatorname{rank}}      % 秩
+\newcommand{\nul}{\operatorname{nul}}    % 零度 (Nullity)
+\newcommand{\Nul}{\operatorname{Nul}}    % 零空间
+\newcommand{\dom}{\operatorname{dom}}    % 定义域
+\newcommand{\im}{\operatorname{im}}      % 像 (Image)
+\newcommand{\coim}{\operatorname{coim}}  % 陪像
+\newcommand{\coker}{\operatorname{coker}}% 陪核
+\newcommand{\tr}{\operatorname{tr}}      % 迹 (Trace)
+\newcommand{\Tr}{\operatorname{Tr}}      % 迹 (大写)
+\newcommand{\diag}{\operatorname{diag}}  % 对角矩阵
+\newcommand{\codim}{\operatorname{codim}}% 余维数
+\newcommand{\row}{\operatorname{row}}    % 行空间
+\newcommand{\col}{\operatorname{col}}    % 列空间
+\newcommand{\Mat}{\operatorname{Mat}}    % 矩阵空间
+\newcommand{\am}{\operatorname{AM}}% 代数重数
+\newcommand{\gm}{\operatorname{GM}}% 几何重数
+\newcommand{\Ann}{\operatorname{Ann}}    % 零化子 (Annihilator)
+\newcommand{\Char}{\operatorname{Char}}  % 特征 (Characteristic)
+\newcommand{\Min}{\operatorname{Min}}    % 最小多项式
+\newcommand{\piv}{\operatorname{piv}}	 % 主元指数
+\newcommand{\Hom}{\operatorname{Hom}}    % 态射集
+\newcommand{\End}{\operatorname{End}}    % 自同态
+\newcommand{\Aut}{\operatorname{Aut}}    % 自同构
+\newcommand{\Isom}{\operatorname{Isom}}  % 同构
+\newcommand{\lcm}{\operatorname{lcm}}    % 最小公倍数
+\newcommand{\ord}{\operatorname{ord}}    % 阶 (Order)
+\newcommand{\op}{\operatorname{op}}      % 反对偶
+\newcommand{\Frac}{\operatorname{Frac}}  % 分式域
+\newcommand{\tor}{\operatorname{tor}}    % 挠
+\newcommand{\res}{\operatorname{res}}    % 残数/限制
+\newcommand{\rad}{\operatorname{rad}}    % 根
+\newcommand{\sign}{\operatorname{sign}}  % 符号函数
+\newcommand{\sgn}{\operatorname{sgn}}  % 符号函数
+\newcommand{\inv}{\operatorname{inv}}    % 逆/不变
+\newcommand{\ev}{\operatorname{ev}}      % 赋值映射
+\newcommand{\Equ}{\operatorname{Equ}} 	 % 等价关系类
+\newcommand{\Res}{\operatorname{Res}} 	 % 结式,限制积 
+\newcommand{\Rat}{\operatorname{Rat}} 	 % 有理性
+\newcommand{\aplus}{\mathbin{\bm{+}}}
+\newcommand{\aminus}{\mathbin{\bm{-}}}
+\newcommand{\Der}{\operatorname{Der}}    % 导子
+\newcommand{\Lib}{\operatorname{Lib}}    % 自由对象相关记号
+\newcommand{\Libas}{\operatorname{Libas}} % 自由代数相关记号
+\newcommand{\Libasc}{\operatorname{Libasc}} % 自由结合代数相关记号
+\newcommand{\Stab}{\operatorname{Stab}}  % 稳定子
+\newcommand{\Fix}{\operatorname{Fix}}    % 不动点集
+\newcommand{\orbit}{\operatorname{orbit}}% 轨道
+\newcommand{\Ind}{\operatorname{Ind}}    % 诱导表示
+\newcommand{\Ad}{\operatorname{Ad}}      % 伴随表示
+\newcommand{\ad}{\operatorname{ad}}      
+\newcommand{\Inn}{\operatorname{Inn}}    % 内同构群
+\newcommand{\Int}{\operatorname{Int}}    % 内自同构
+\newcommand{\Grp}{\operatorname{Grp}}    % 群范畴
+\newcommand{\Mo}{\operatorname{Mo}}      % 幺半群相关记号
+\newcommand{\Mag}{\operatorname{Mag}}    % 原群（magma）
+\newcommand{\Core}{\operatorname{Core}}  % 核心/正规核
+\newcommand{\bigast}{\mathop{\vcenter{\hbox{\scalebox{1.5}{$\ast$}}}}\displaylimits}
+\newcommand{\bigtop}{\mathop{\vcenter{\hbox{\scalebox{1.5}{$\top$}}}}\displaylimits}
+\newcommand{\bigbot}{\mathop{\vcenter{\hbox{\scalebox{1.5}{$\bot$}}}}\displaylimits}
+\newcommand{\bigboxplus}{\mathop{\vcenter{\hbox{\scalebox{1.5}{$\boxplus$}}}}\displaylimits}
+\newcommand{\Shuffle}{\operatorname{Sf}} % shuffle 运算
+\newcommand{\Pol}{\operatorname{Pol}}    % 多项式空间
+\newcommand{\mult}{\operatorname{mult}} % 重数
+\newcommand{\Ratio}{\operatorname{Ratio}} % 比率/商
+\newcommand{\cont}{\operatorname{cont}}  % 多项式的容度
+\newcommand{\Com}{\operatorname{Com}}    % 交换子
+\newcommand{\Eig}{\operatorname{Eig}}    % 特征空间
+\newcommand{\GEig}{\operatorname{GEig}}  % 广义特征空间
+\newcommand{\Gram}{\operatorname{Gram}}  % Gram 矩阵
+\newcommand{\Sesq}{\operatorname{Sesq}}  % 半双线性形式
+\newcommand{\Tens}{\operatorname{Tens}}      % 交替张量
+\newcommand{\Alt}{\operatorname{Alt}}      % 交替张量
+\newcommand{\Sym}{\operatorname{Sym}}      % 对称张量
+\newcommand{\Bil}{\operatorname{Bil}}      % 双线性形式
+\newcommand{\SymBil}{\operatorname{SymBil}}% 对称双线性形式
+\newcommand{\AntiBil}{\operatorname{AntiBil}}% 对称双线性形式 
+\newcommand{\Mult}{\operatorname{Mult}}	   % 多重映射
+\newcommand{\pr}{\operatorname{pr}}      % 投影 (Projection)
+\newcommand{\adj}{\operatorname{adj}}	   % 矩阵的古典伴随
+\newcommand{\cf}{\operatorname{cf}}	   % 矩阵的余子式矩阵
+\newcommand{\Norm}{\operatorname{N}}     % 范数/域范数
+\newcommand{\Pc}{\operatorname{Pc}}     % 特征多项式
+
+% -----------------------------------------------------------------
+% 几何
+% -----------------------------------------------------------------
+\newcommand{\Vol}{\operatorname{Vol}}    % 体积
+\newcommand{\dr}{\operatorname{dr}}      % 外微分相关
+\newcommand{\OrdB}{\operatorname{OrdB}}  % 有序基
+\newcommand{\Tran}{\operatorname{Tran}}  % 转移矩阵
+\newcommand{\str}{\operatorname{str}}    % 超迹
+\newcommand{\Aff}{\operatorname{Aff}}    % 仿射空间
+\newcommand{\Gr}{\operatorname{Gr}}      % 格拉斯曼流形
+\newcommand{\Pf}{\operatorname{Pf}}      % Pfaffian
+\newcommand{\Sp}{\operatorname{Sp}}      % 辛群
+\newcommand{\SU}{\operatorname{SU}}      % 特殊酉群
+\newcommand{\SO}{\operatorname{SO}}      % 特殊正交群
+\newcommand{\GL}{\operatorname{GL}}      % 一般线性群
+\newcommand{\SL}{\operatorname{SL}}      % 特殊线性群
+\newcommand{\GU}{\operatorname{GU}}      % 相似变换群
+\newcommand{\GSU}{\operatorname{GSU}}    % 特殊相似变换群
+\newcommand{\PGL}{\operatorname{PGL}}    % 特殊酉群
+\newcommand{\ind}{\operatorname{ind}}    % 指数
+\newcommand{\Dir}{\operatorname{Dir}}    % 方向
+\newcommand{\Herm}{\operatorname{Herm}}  % Hermitian 形式
+\newcommand{\SHerm}{\operatorname{SHerm}} % 对称 Hermitian 形式
+\newcommand{\AHerm}{\operatorname{AHerm}} % 反 Hermitian 形式
+\newcommand{\Quad}{\operatorname{Quad}}  % 二次型
+\newcommand{\Disp}{\operatorname{Disp}}  % 位移
+\newcommand{\Sim}{\operatorname{Sim}}    % 相似变换
+\newcommand{\Cl}{\operatorname{Cl}}      % Clifford 代数/闭包
+\newcommand{\Spin}{\operatorname{Spin}}  % Spin 群
+
+% -----------------------------------------------------------------
+% 分析
+% -----------------------------------------------------------------
+\newcommand{\limit}{\displaystyle\lim}  % 强制使用行间公式样式的极限
+\newcommand{\tg}{\operatorname{tg}}      % 正切函数
+\newcommand{\ctg}{\operatorname{ctg}}   % 余切函数
+\newcommand{\interior}{\operatorname{int}} % 内部
+\newcommand{\exterior}{\operatorname{ext}} % 外部
+\newcommand{\boundary}{\operatorname{bd}}  % 边界
+\newcommand{\closure}{\operatorname{cl}}   % 闭包
+\newcommand{\supp}{\operatorname{supp}}    % 支集
+\newcommand{\disc}{\operatorname{disc}}    % 判别式/离散    
+\newcommand{\tw}{\operatorname{tw}}        % 扭结 (Twist)

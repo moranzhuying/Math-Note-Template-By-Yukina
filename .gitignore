@@ -1,0 +1,26 @@
+# === LaTeX 编译产物 ===
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex(busy)
+*.bbl
+*.blg
+*.dvi
+*.xdv
+*.pdf
+
+# === 编辑器 / 系统 ===
+*.bak
+*.swp
+*~
+Thumbs.db
+.DS_Store
+
+# === WorkBuddy 项目数据（本地专属，不入库） ===
+.workbuddy/
