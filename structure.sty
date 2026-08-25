@@ -46,6 +46,15 @@
 \usepackage{titlesec}
 \usepackage{fancyhdr}
 
+% 5.0 Chapter 标题格式
+% ctexbook 默认编号行 (Chapter 1) 用 \huge，标题行用 \Huge，差一号。
+% 这里统一为 \Huge，使编号与标题字号一致。
+\ctexset{
+    chapter = {
+        nameformat = \Huge \bfseries,
+    }
+}
+
 % 5.1 Section 格式设置
 \titleformat{\section}
 {\normalfont\Large\bfseries\raggedright}
