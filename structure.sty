@@ -310,6 +310,17 @@ base_thmstyle, label type=sketch, colback=mainpurple!5!white, accent north=mainp
 \crefname{algorithm}{算法}{算法}
 \crefname{convention}{约定}{约定}
 \crefname{alarm}{警示}{警示}
+
+% 图、表、公式的中文引用名与标题名
+% （ctexbook scheme=plain 下默认是英文 Figure/Table/Contents 等，这里统一为中文）
+\crefname{figure}{图}{图}
+\crefname{table}{表}{表}
+\crefname{equation}{公式}{公式}
+\Crefname{figure}{图}{图}
+\Crefname{table}{表}{表}
+\Crefname{equation}{公式}{公式}
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
 \renewcommand{\autoref}[1]{\cref{#1}}
 
 
