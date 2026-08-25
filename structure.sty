@@ -7,8 +7,8 @@
 \usepackage{geometry}
 \geometry{a4paper, left=1.5cm, right=1.5cm, top=2cm, bottom=2cm}
 \linespread{1}
-% 英文正文字体：TeX Gyre Termes（Times 风格，参考 Accessible LaTeX templates 的 PhD 模板）
-\setmainfont{TeX Gyre Termes}
+% 英文正文字体：TeX Gyre Heros（无衬线，Helvetica 风格，参考 Accessible LaTeX templates 的 Article 模板）
+\setmainfont{TeX Gyre Heros}
 \usepackage{color}
 \usepackage{bm}
 
@@ -161,7 +161,7 @@
 		attach title to upper={\par\nopagebreak\smallskip},
 		fonttitle=\bfseries\sffamily,
 		description font=\bfseries\sffamily,
-		separator sign={.},
+		separator sign={},
 		label separator={},
 		description delimiters={}{},
 		left=2pt, right=2pt, top=8pt, bottom=5pt,
@@ -170,6 +170,36 @@
 	accent north/.style={borderline north={1.8pt}{0pt}{#1}},
 	accent west/.style={borderline west={1.8pt}{0pt}{#1}}
 }
+
+% --- 2.5 定理编号字号调整 ---
+% tcolorbox 的定理标题中编号与名称共用 fonttitle 字号，
+% 但数字在 sans 字体里的视觉高度低于汉字，这里把编号加大一档（\large），
+% 使其与「定义」「定理」等名称视觉等高。
+% 注意：必须直接重定义 \__tcobox_theo_format:nn（渲染实际调用的函数）；
+% tcolorbox 加载时已用 \cs_set_eq:NN 把该函数绑定到原始实现，
+% 只改 \__tcobox_theo_format_name_number:nn 不会生效。
+\ExplSyntaxOn
+\cs_set_nopar:Npn \__tcobox_theo_format:nn #1#2
+  {
+    \tl_if_empty:nTF { #1 }
+      {
+        \tl_if_empty:nF { #2 }
+          {
+            \bool_set_false:N \l__tcobox_theo_headempty_bool
+            \group_begin: \large #2 \group_end:
+          }
+      }
+      {
+        \bool_set_false:N \l__tcobox_theo_headempty_bool
+        #1
+        \tl_if_empty:nF { #2 }
+          {
+            \nobreakspace
+            \group_begin: \large #2 \group_end:
+          }
+      }
+  }
+\ExplSyntaxOff
 
 % --- 3. 核心理论环境 (使用 tcbtheorem，带编号) ---
 
