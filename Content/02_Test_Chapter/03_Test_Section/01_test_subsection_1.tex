@@ -1,0 +1,50 @@
+\subsection{测试小节一}
+
+本节测试更复杂的数学公式与范围引用.
+
+二项式系数与分式嵌套:
+\begin{equation}
+    \binom{n}{k} = \frac{n!}{k!(n-k)!},
+    \quad
+    \frac{\frac{a}{b} + 1}{\frac{c}{d} - 1}
+    \label{eq:binom-1}
+\end{equation}
+
+大运算符:
+\begin{equation}
+    \sum_{k=1}^{n} k = \frac{n(n+1)}{2},
+    \quad
+    \prod_{i=1}^{m} a_i,
+    \quad
+    \lim_{x \to 0} \frac{\sin x}{x} = 1,
+    \quad
+    \int_{-\infty}^{+\infty} e^{-x^2}\,\mathrm{d}x = \sqrt{\pi}
+    \label{eq:bigop-1}
+\end{equation}
+
+split 长公式:
+\begin{equation}
+    \begin{split}
+        (a+b+c)^3 &= a^3 + b^3 + c^3 + 3a^2b + 3a^2c \\
+        &\quad + 3b^2a + 3b^2c + 3c^2a + 3c^2b + 6abc
+    \end{split}
+    \label{eq:split-1}
+\end{equation}
+
+连续编号公式:
+\begin{equation}
+    a = 1
+    \label{eq:range-1}
+\end{equation}
+
+\begin{equation}
+    b = 2
+    \label{eq:range-2}
+\end{equation}
+
+\begin{equation}
+    c = 3
+    \label{eq:range-3}
+\end{equation}
+
+范围引用测试: \cref{eq:range-1,eq:range-2,eq:range-3} (连续编号应合并为范围).
