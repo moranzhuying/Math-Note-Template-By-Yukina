@@ -7,8 +7,8 @@
 \usepackage{geometry}
 \geometry{a4paper, left=1.5cm, right=1.5cm, top=2cm, bottom=2cm}
 \linespread{1}
-% 英文正文字体：TeX Gyre Heros（无衬线，Helvetica 风格，参考 Accessible LaTeX templates 的 Article 模板）
-\setmainfont{TeX Gyre Heros}
+% 英文正文字体：TeX Gyre Termes（Times 风格衬线）
+\setmainfont{TeX Gyre Termes}
 \usepackage{color}
 \usepackage{bm}
 
@@ -272,6 +272,10 @@ base_thmstyle, label type=sketch, colback=mainpurple!5!white, accent north=mainp
 % 引用与超链接设置
 % =================================================================
 \usepackage{hyperref}
+% PDF 书签（侧边栏）显示章节编号：\numberline 在书签里展开为「编号+空格」
+\pdfstringdefDisableCommands{%
+  \def\numberline#1{#1~}%
+}
 \hypersetup{
 	colorlinks=true,         % 开启链接颜色
 	linkcolor=mainblue,      % 内部链接颜色(如目录,公式引用),使用我们定义的蓝色
