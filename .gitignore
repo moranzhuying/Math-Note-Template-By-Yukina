@@ -13,6 +13,7 @@
 *.blg
 *.dvi
 *.xdv
+*.listing
 *.pdf
 
 # === 编辑器 / 系统 ===
