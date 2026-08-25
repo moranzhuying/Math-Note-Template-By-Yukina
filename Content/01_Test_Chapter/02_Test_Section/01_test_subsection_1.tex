@@ -20,4 +20,41 @@
 
 \medskip
 
+下面测试多列合并表格(\ref{tab:multi}).
+
+\begin{table}[htbp]
+    \centering
+    \caption{多列合并表格}
+    \label{tab:multi}
+    \begin{tabular}{lccc}
+        \hline
+        \multicolumn{4}{c}{总标题} \\
+        \hline
+        行 & 列1 & 列2 & 列3 \\
+        \hline
+        1 & A & B & C \\
+        2 & D & E & F \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\medskip
+
+下面测试含数学公式的表格(\ref{tab:math}).
+
+\begin{table}[htbp]
+    \centering
+    \caption{含数学公式的表格}
+    \label{tab:math}
+    \begin{tabular}{cl}
+        \hline
+        记号 & 含义 \\
+        \hline
+        $\N$ & 自然数集 \\
+        $\Z$ & 整数集 \\
+        $\R$ & 实数集 \\
+        \hline
+    \end{tabular}
+\end{table}
+
 跨环境引用汇总测试:\autoref{fig:test-pic},\autoref{tab:test},\autoref{thm:test},\eqref{eq:test-1}.

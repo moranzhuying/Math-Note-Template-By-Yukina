@@ -18,3 +18,27 @@
 \end{figure}
 
 图片引用测试:\ref{fig:test-pic},\autoref{fig:test-pic},\cref{fig:test-pic}.
+
+\medskip
+
+下面测试两张图片并排(\ref{fig:side-1} 与 \ref{fig:side-2}).
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Figures/ran-1.png}
+        \caption{并排图一}
+        \label{fig:side-1}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Figures/moca-0.png}
+        \caption{并排图二}
+        \label{fig:side-2}
+    \end{minipage}
+\end{figure}
+
+并排图引用测试:\autoref{fig:side-1},\autoref{fig:side-2}.
+
