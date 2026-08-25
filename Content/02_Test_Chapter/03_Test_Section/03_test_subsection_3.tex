@@ -1,0 +1,83 @@
+\subsection{测试小节三}
+
+本节测试 tikz-cd 交换图.
+
+\subsubsection*{范畴论短交换图}
+
+张量积的泛性质 (图~\ref{cd:tensor}):
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzcd}
+        M \times N \arrow[r, "B"] \arrow[d, "\otimes"'] & P \\
+        M \otimes N \arrow[ru, "\tilde{B}"', dashed]
+    \end{tikzcd}
+    \caption{张量积的泛性质}
+    \label{cd:tensor}
+\end{figure}
+
+自由对象的泛性质 (图~\ref{cd:free}):
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzcd}
+        X \arrow[r, "f"] \arrow[d, "i"'] & A \\
+        F(X) \arrow[ru, "\tilde{f}"', dashed]
+    \end{tikzcd}
+    \caption{自由对象的泛性质}
+    \label{cd:free}
+\end{figure}
+
+自然变换的交换方图 (图~\ref{cd:nat}):
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzcd}
+        A \arrow[r, "f"] \arrow[d, "\alpha_A"'] & B \arrow[d, "\alpha_B"] \\
+        A' \arrow[r, "f'"] & B'
+    \end{tikzcd}
+    \caption{自然变换的交换方图}
+    \label{cd:nat}
+\end{figure}
+
+\subsubsection*{同调代数长交换图}
+
+五引理 (图~\ref{cd:five}):
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzcd}
+        A_1 \arrow[r] \arrow[d, "\alpha_1"] & A_2 \arrow[r] \arrow[d, "\alpha_2"] & A_3 \arrow[r] \arrow[d, "\alpha_3"] & A_4 \arrow[r] \arrow[d, "\alpha_4"] & A_5 \arrow[d, "\alpha_5"] \\
+        B_1 \arrow[r] & B_2 \arrow[r] & B_3 \arrow[r] & B_4 \arrow[r] & B_5
+    \end{tikzcd}
+    \caption{五引理}
+    \label{cd:five}
+\end{figure}
+
+蛇引理 (图~\ref{cd:snake}):
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzcd}
+         & 0 \arrow[d] & 0 \arrow[d] & 0 \arrow[d] & \\
+        0 \arrow[r] & A' \arrow[r] \arrow[d, "f'"] & A \arrow[r] \arrow[d, "f"] & A'' \arrow[r] \arrow[d, "f''"] & 0 \\
+        0 \arrow[r] & B' \arrow[r] \arrow[d, "g'"] & B \arrow[r] \arrow[d, "g"] & B'' \arrow[r] \arrow[d, "g''"] & 0 \\
+         & C' \arrow[r] \arrow[d] & C \arrow[r] \arrow[d] & C'' \arrow[r] \arrow[d] & 0 \\
+         & 0 & 0 & 0 &
+    \end{tikzcd}
+    \caption{蛇引理}
+    \label{cd:snake}
+\end{figure}
+
+同调长正合列 (图~\ref{cd:les}):
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzcd}
+        \cdots \arrow[r] & H_n(A) \arrow[r, "i_*"] & H_n(B) \arrow[r, "p_*"] & H_n(C) \arrow[r, "\partial"] & H_{n-1}(A) \arrow[r] & \cdots
+    \end{tikzcd}
+    \caption{同调长正合列}
+    \label{cd:les}
+\end{figure}
+
+交换图引用测试: \autoref{cd:tensor}, \autoref{cd:free}, \autoref{cd:nat}, \autoref{cd:five}, \autoref{cd:snake}, \autoref{cd:les}.
