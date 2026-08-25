@@ -10,13 +10,16 @@
 ├── structure.sty         # 核心样式：页面布局、定理环境、符号库、引用
 ├── quiver.sty            # 交换图支持（q.uiver.app 导出，封装 tikz-cd）
 ├── commit.sh             # 一键提交脚本（可选）
-├── Content/              # 正文内容，按部分（part）分目录管理
-│   └── 01_Test_title_one/
-│       ├── index.tex     # 章节汇总，\input 本部分各节
-│       ├── 01_test_title_1.tex
-│       ├── 02_test_title_2.tex
-│       └── 03_test_title_3.tex
-└── Figures/              # 插图目录
+├── Content/                  # 内容目录
+│   ├── Preface/              # 前言：全书结构、更新记录、记号说明
+│   ├── 01_Test_Chapter/      # 正文测试章节（三级嵌套示例）
+│   │   ├── intro.tex         #   本章导引
+│   │   ├── 01_Test_Section/  #   节：index.tex + 小节文件
+│   │   ├── Summary/          #   本章小结
+│   │   └── Appendix_Test_A/  #   章内附录
+│   ├── 02_Test_Chapter/      # 正文测试章节
+│   └── Appendix/             # 后记：术语对照表、参考文献
+└── Figures/                  # 插图目录
 ```
 
 ## 模板特点
@@ -52,7 +55,18 @@
 
 ### 6. 内容分层管理
 
-`main.tex` → `\part` → `Content/<部分>/index.tex` → `\input` 各节，将长文档拆分为小文件，便于维护与复用。
+正文采用 Chapter → Section → 小节三级嵌套结构，每层目录有 `index.tex` 汇总、逐级 `\input`。每章附带 `intro.tex`（本章导引）、`Summary/`（本章小结），每节可带 `Summary/`（本节小结）与章内附录 `Appendix_Name/`，将长文档拆分为小文件，便于维护与复用。
+
+## 测试计划
+
+模板内置两章测试内容（`Content/01_Test_Chapter`、`02_Test_Chapter`），按复杂度从低到高分四轮验证：
+
+| 轮次 | 复杂度 | 测试项目 |
+|------|--------|----------|
+| 第一轮 | 基础 | 正文文字与列表、基础公式（equation/align/gather）、核心定理环境、单图与单表插入、四种引用（\ref / \autoref / \cref / \eqref） |
+| 第二轮 | 进阶 | 公式进阶（multline/cases/矩阵/subequations/\tag）、其余定理环境、并排图、多列表格、脚注、超链接、嵌套列表、多标签引用 |
+| 第三轮 | 复杂 | 范围引用、跨页长表格（longtable）、复杂数学（分式嵌套/大运算符/split）、跨章引用与页码引用 |
+| 第四轮 | 交换图 | tikz-cd 交换图：范畴论短图（泛性质、自然变换）与同调代数长图（五引理、蛇引理、长正合列） |
 
 ## 更新日志
 
@@ -60,4 +74,4 @@
 
 ## 使用
 
-用 XeLaTeX 编译 `main.tex` 即可。新增章节时，在 `Content/` 下新建目录与 `index.tex`，再于 `main.tex` 中以 `\input` 引入。
+用 XeLaTeX 编译 `main.tex` 即可。新增章节时，在 `Content/` 下按三级结构新建目录（Chapter → Section → 小节文件），每层建 `index.tex` 汇总，并在上一级 `\input` 引入。
