@@ -14,13 +14,31 @@
 % ==========================================
 % 2. 数学核心宏包
 % ==========================================
-\usepackage{amsmath, amsfonts, amssymb, amsthm}
-\usepackage{mathrsfs, stmaryrd, mathtools}
+% 英文字体采用 unicode-math + Latin Modern Math（参考 Accessible LaTeX templates）
+% 注意：stmaryrd 与 unicode-math 的 \eth 冲突且本模板未用其符号，已移除
+\usepackage{amsmath, amsthm}
+\usepackage{mathtools}
+\usepackage{unicode-math}
+\setmathfont{Latin Modern Math}
+% unicode-math 不提供 \square（对应命令为 \mdlgwhtsquare），补兼容别名
+\providecommand{\square}{\mdlgwhtsquare}
 
 % --- 交换图与正合列 (核心) ---
 \usepackage{tikz-cd}
 \usepackage{graphicx}
 \usepackage{longtable}
+
+% ==========================================
+% 2.5 补充宏包（参考 Accessible LaTeX templates）
+% ==========================================
+\usepackage{setspace}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
 
 % ==========================================
 % 3. 列表环境自定义 (enumerate/itemize)
@@ -51,6 +69,9 @@
 % 这里统一为 \Huge，使编号与标题字号一致。
 \ctexset{
     chapter = {
+        nameformat = \Huge \bfseries,
+    },
+    part = {
         nameformat = \Huge \bfseries,
     }
 }

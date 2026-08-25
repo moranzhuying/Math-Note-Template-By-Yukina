@@ -17,7 +17,8 @@
 % `tikz-cd` is necessary to draw commutative diagrams.
 \RequirePackage{tikz-cd}
 % `amssymb` is necessary for `\lrcorner` and `\ulcorner`.
-\RequirePackage{amssymb}
+% 若 unicode-math 已加载则无需 amssymb（符号已由 unicode-math 提供，且 amssymb 的 \eth 会与之冲突）。
+\@ifpackageloaded{unicode-math}{}{\RequirePackage{amssymb}}
 % `calc` is necessary to draw curved arrows.
 \usetikzlibrary{calc}
 % `pathmorphing` is necessary to draw squiggly arrows.
