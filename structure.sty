@@ -7,21 +7,16 @@
 \usepackage{geometry}
 \geometry{a4paper, left=1.5cm, right=1.5cm, top=2cm, bottom=2cm}
 \linespread{1}
-\usepackage{lmodern}
+% 英文正文字体：TeX Gyre Termes（Times 风格，参考 Accessible LaTeX templates 的 PhD 模板）
+\setmainfont{TeX Gyre Termes}
 \usepackage{color}
 \usepackage{bm}
 
 % ==========================================
 % 2. 数学核心宏包
 % ==========================================
-% 英文字体采用 unicode-math + Latin Modern Math（参考 Accessible LaTeX templates）
-% 注意：stmaryrd 与 unicode-math 的 \eth 冲突且本模板未用其符号，已移除
-\usepackage{amsmath, amsthm}
-\usepackage{mathtools}
-\usepackage{unicode-math}
-\setmathfont{Latin Modern Math}
-% unicode-math 不提供 \square（对应命令为 \mdlgwhtsquare），补兼容别名
-\providecommand{\square}{\mdlgwhtsquare}
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+\usepackage{mathrsfs, stmaryrd, mathtools}
 
 % --- 交换图与正合列 (核心) ---
 \usepackage{tikz-cd}
