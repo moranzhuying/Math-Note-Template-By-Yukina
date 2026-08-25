@@ -324,10 +324,17 @@ base_thmstyle, label type=sketch, colback=mainpurple!5!white, accent north=mainp
 \renewcommand{\autoref}[1]{\cref{#1}}
 
 % 多标签引用的连接词（默认英文 and，改为中文）
-\renewcommand{\crefpairconjunction}{和}
-\renewcommand{\crefmiddleconjunction}{,}
-\renewcommand{\creflastconjunction}{和}
-\renewcommand{\crefrangeconjunction}{到}
+% 注意：cleveref 的连接词命令延迟初始化，须放在 \AtBeginDocument 中重定义
+% 同类型标签之间用 conjunction，不同类型标签组之间用 groupconjunction，两套都要改
+\AtBeginDocument{
+    \renewcommand{\crefpairconjunction}{和}
+    \renewcommand{\crefmiddleconjunction}{,}
+    \renewcommand{\creflastconjunction}{和}
+    \renewcommand{\crefrangeconjunction}{到}
+    \renewcommand{\crefpairgroupconjunction}{和}
+    \renewcommand{\crefmiddlegroupconjunction}{,}
+    \renewcommand{\creflastgroupconjunction}{和}
+}
 
 
 
